@@ -2,8 +2,11 @@
     "type": "mongodb",
     "host": "localhost",
     "port": 27017,
-    "database": "test",
+    "database": "dashboard_db",
     "synchronize": true,
     "logging": true,
-    "entities": ["src/entities/**/*.ts"]
+    "entities": [
+        "src/userAdmin/userAdmin.entity.ts",
+        "src/Post/post.entity.ts"
+    ]
 }
