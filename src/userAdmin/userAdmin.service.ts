@@ -12,18 +12,26 @@ export class UserService {
     }
 
     async getUserById(userId: string) {
-        const user = await this.userRepository.findOne(userId, { relations: ["posts", "comments"] });
+        const user = await this.userRepository.findOneOrFail({ where: { id: userId as any }, relations: ["posts"] });
         if (!user) {
             throw new Error("User not found");
         }
         return user;
     }
 
-    async deleteUser(userId: string) {
-        const user = await this.userRepository.findOne(userId);
-        if (!user) {
+    async getAllUsers() {
+        const users = await this.userRepository.find({ relations: ["posts"] });
+        if (!users) {
             throw new Error("User not found");
         }
-        await this.userRepository.remove(user);
+        return users;
     }
+    
+    // async deleteUser(userId: string) {
+    //     const user = await this.userRepository.findOne(userId);
+    //     if (!user) {
+    //         throw new Error("User not found");
+    //     }
+    //     await this.userRepository.remove(user);
+    // }
 }

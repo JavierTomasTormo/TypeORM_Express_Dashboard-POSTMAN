@@ -2,9 +2,9 @@
   "name": "typeorm_prisma_express_dashboard-postman",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
+  "scripts": {
     "start": "ts-node-dev src/app.ts"
-},
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

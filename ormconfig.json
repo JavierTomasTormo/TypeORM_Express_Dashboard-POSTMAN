@@ -1,12 +1,12 @@
 {
     "type": "mongodb",
-    "host": "localhost",
-    "port": 27017,
-    "database": "dashboard_db",
-    "synchronize": true,
-    "logging": true,
+    "url": "mongodb://localhost:27017/mydatabase",
+    "useNewUrlParser": true,
+    "useUnifiedTopology": true,
     "entities": [
         "src/userAdmin/userAdmin.entity.ts",
         "src/Post/post.entity.ts"
-    ]
+    ],
+    "synchronize": true,
+    "logging": false
 }

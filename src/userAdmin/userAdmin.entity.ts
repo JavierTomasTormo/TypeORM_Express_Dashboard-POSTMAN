@@ -1,17 +1,14 @@
-import { Entity, ObjectIdColumn, ObjectId, Column, ManyToMany, JoinTable } from "typeorm";
+import { Entity, ObjectIdColumn, ObjectId, Column, ManyToMany } from "typeorm";
 import { Post } from "../Post/post.entity";
-
 
 @Entity()
 export class User {
     @ObjectIdColumn()
-    id: ObjectId;
+    id!: ObjectId;
 
     @Column()
-    name: string;
+    name!: string;
 
     @ManyToMany(() => Post, post => post.users)
-    @JoinTable()
-    posts: Post[];
-
+    posts!: Post[];
 }

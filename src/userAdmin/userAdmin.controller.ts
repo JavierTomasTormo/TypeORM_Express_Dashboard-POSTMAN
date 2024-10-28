@@ -19,7 +19,7 @@ export class UserController {
             const user = await this.userService.createUser(createUserDto);
             res.status(201).json(user);
         } catch (error) {
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ message: error });
         }
     }
 
@@ -29,17 +29,27 @@ export class UserController {
             const user = await this.userService.getUserById(userId);
             res.status(200).json(user);
         } catch (error) {
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ message: error });
         }
     }
 
-    async deleteUser(req: Request, res: Response) {
-        const { userId } = req.params;
-        try {
-            await this.userService.deleteUser(userId);
-            res.status(204).send();
-        } catch (error) {
-            res.status(400).json({ message: error.message });
+    async getAllUsers(req: Request, res: Response) {
+            try {
+                const users = await this.userService.getAllUsers();
+                res.status(200).json(users);
+            } catch (error) {
+                res.status(400).json({ message: error });
+            }
         }
-    }
+    
+
+    // async deleteUser(req: Request, res: Response) {
+    //     const { userId } = req.params;
+    //     try {
+    //         await this.userService.deleteUser(userId);
+    //         res.status(204).send();
+    //     } catch (error) {
+    //         res.status(400).json({ message: error });
+    //     }
+    // }
 }
