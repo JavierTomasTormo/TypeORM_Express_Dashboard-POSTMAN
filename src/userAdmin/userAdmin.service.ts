@@ -2,7 +2,7 @@
 import { AppDataSource } from '../config/database';
 import { UserAdmin } from './userAdmin.entity';
 import { ObjectId } from 'mongodb';
-import { CreateUserAdminDto } from './dto/createUserAdmin.dto';
+import { CreateUserAdminDto, LoginUserDto, UpdateUserDto } from './dto';
 
 export class UserAdminService {
     private userRepository = AppDataSource.getRepository(UserAdmin);
@@ -13,8 +13,17 @@ export class UserAdminService {
         return await this.userRepository.save(user);
     }
 
+    async loginUser(loginData: LoginUserDto): Promise<UserAdmin | null> {
+        // const user = await this.userRepository.findOne({ where: { email: loginData.email } });
+        // if (user && user.password === loginData.password) {
+        //     return user;
+        // }
+        return null;
+    }
 
-    
+
+
+
     async getAllUsers(): Promise<UserAdmin[]> {
         return await this.userRepository.find();
     }//getAllUsers
@@ -32,10 +41,14 @@ export class UserAdminService {
     }//getUserById
 
 
-    async updateUser(id: string, userData: Partial<UserAdmin>): Promise<UserAdmin | null> {
-        await this.userRepository.update(id, userData);
-        return this.getUserById(id);
-    }//updateUser
+    async updateUser(id: string, updateData: UpdateUserDto): Promise<UserAdmin> {
+        await this.userRepository.update(id, updateData);
+        const updatedUser = await this.getUserById(id);
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+        return updatedUser;
+    }
 
     async deleteUser(id: string): Promise<void> {
         await this.userRepository.delete(id);

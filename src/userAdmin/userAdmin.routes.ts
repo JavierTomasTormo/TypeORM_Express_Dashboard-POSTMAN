@@ -1,6 +1,6 @@
 // src/userAdmin/userAdmin.routes.ts
 import { Router } from 'express';
-import {createUserAdmin, getAllUserAdmins, getUserAdminById, updateUserAdmin, deleteUserAdmin} from './userAdmin.controller';
+import { createUserAdmin, loginUser, updateUserAdmin, getAllUserAdmins, getUserAdminById, deleteUserAdmin } from './userAdmin.controller';
 
 const router = Router();
 
@@ -22,6 +22,11 @@ router.get('/:id', (req, res, next) => {
 // Ruta para actualizar un usuario por ID
 router.put('/:id', (req, res, next) => {
     updateUserAdmin(req, res).catch(next);
+});
+
+// Ruta para iniciar sesión
+router.post('/login', (req, res, next) => {
+    loginUser(req, res).catch(next);
 });
 
 // Ruta para eliminar un usuario por ID

@@ -8,16 +8,30 @@ const userAdminService = new UserAdminService();
 
     // Crear un nuevo usuario
     export const createUserAdmin = async (req: Request, res: Response) => {
-        const createUserAdminDto = new CreateUserAdminDto();
-        Object.assign(createUserAdminDto, req.body);
+        const createUserDto = new CreateUserAdminDto();
+        Object.assign(createUserDto, req.body);
     
-        const errors = await validate(createUserAdminDto);
+        const errors = await validate(createUserDto);
         if (errors.length > 0) {
             return res.status(400).json(errors);
         }
     
-        const newUser = await userAdminService.createUser(createUserAdminDto);
+        const newUser = await userAdminService.createUser(createUserDto);
         res.json(newUser);
+    };
+
+
+    export const loginUser = async (req: Request, res: Response) => {
+        const loginUserDto = new LoginUserDto();
+        Object.assign(loginUserDto, req.body);
+    
+        const errors = await validate(loginUserDto);
+        if (errors.length > 0) {
+            return res.status(400).json(errors);
+        }
+    
+        const user = await userAdminService.loginUser(loginUserDto);
+        res.json(user);
     };
 
     // Obtener todos los usuarios
@@ -48,16 +62,16 @@ const userAdminService = new UserAdminService();
 
     // Actualizar un usuario por ID
     export const updateUserAdmin = async (req: Request, res: Response) => {
-        try {
-            const { id } = req.params;
-            const updatedUser = await userAdminService.updateUser(id, req.body);
-            if (!updatedUser) {
-            return res.status(404).json({ message: 'Usuario no encontrado' });
-            }
-            res.json(updatedUser);
-        } catch (error) {
-            res.status(500).json({ message: 'Error al actualizar el usuario', error });
+        const updateUserDto = new UpdateUserDto();
+        Object.assign(updateUserDto, req.body);
+    
+        const errors = await validate(updateUserDto);
+        if (errors.length > 0) {
+            return res.status(400).json(errors);
         }
+    
+        const updatedUser = await userAdminService.updateUser(req.params.id, updateUserDto);
+        res.json(updatedUser);
     };
 
     // Eliminar un usuario por ID
