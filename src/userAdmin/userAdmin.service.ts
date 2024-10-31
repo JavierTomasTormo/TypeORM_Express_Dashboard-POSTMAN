@@ -4,6 +4,7 @@ import { UserAdmin } from './userAdmin.entity';
 import { ObjectId } from 'mongodb';
 import { CreateUserAdminDto, LoginUserDto, UpdateUserDto } from './dto';
 
+
 export class UserAdminService {
     private userRepository = AppDataSource.getRepository(UserAdmin);
 
@@ -13,15 +14,14 @@ export class UserAdminService {
         return await this.userRepository.save(user);
     }
 
+    
     async loginUser(loginData: LoginUserDto): Promise<UserAdmin | null> {
-        // const user = await this.userRepository.findOne({ where: { email: loginData.email } });
-        // if (user && user.password === loginData.password) {
-        //     return user;
-        // }
+        const user = await this.userRepository.findOne({ where: { email: loginData.email } });
+        if (user && user.password === loginData.password) {
+            return user;
+        }
         return null;
     }
-
-
 
 
     async getAllUsers(): Promise<UserAdmin[]> {
@@ -49,6 +49,9 @@ export class UserAdminService {
         }
         return updatedUser;
     }
+
+
+
 
     async deleteUser(id: string): Promise<void> {
         await this.userRepository.delete(id);

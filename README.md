@@ -31,6 +31,9 @@ Aquí tienes una visión general de la estructura del proyecto:
 │   ├── 📁 userAdmin
 │   │   ├── 📁 dto
 │   │   │   ├── 📄 createUserAdmin.dto.ts
+│   │   │   ├── 📄 login-user.dto.ts
+│   │   │   ├── 📄 update-user.dto.ts
+│   │   │   ├── 📄 index.ts
 │   │   ├── 📄 userAdmin.controller.ts
 │   │   ├── 📄 userAdmin.entity.ts
 │   │   ├── 📄 userAdmin.routes.ts

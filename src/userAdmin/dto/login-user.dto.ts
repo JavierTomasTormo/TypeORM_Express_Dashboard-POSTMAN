@@ -6,9 +6,9 @@ export class LoginUserDto {
     @IsNotEmpty()
     readonly username!: string;
 
-    // @IsEmail()
-    // @IsNotEmpty()
-    // readonly email!: string;
+    @IsEmail()
+    @IsNotEmpty()
+    readonly email!: string;
 
     @IsString()
     @IsNotEmpty()
