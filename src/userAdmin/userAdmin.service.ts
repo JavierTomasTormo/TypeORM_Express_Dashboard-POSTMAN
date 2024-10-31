@@ -1,37 +1,32 @@
-import { getRepository } from "typeorm";
-import { User } from "./userAdmin.entity";
-import { CreateUserDto } from "./dto/createUserAdmin.dto";
+// src/userAdmin/userAdmin.service.ts
+import { AppDataSource } from '../config/database';
+import { UserAdmin } from './userAdmin.entity';
+import { ObjectId } from 'mongodb';
 
-export class UserService {
-    private userRepository = getRepository(User);
 
-    async createUser(createUserDto: CreateUserDto) {
-        const user = this.userRepository.create(createUserDto);
-        await this.userRepository.save(user);
-        return user;
-    }
+export class UserAdminService {
+    private userRepository = AppDataSource.getRepository(UserAdmin);
 
-    async getUserById(userId: string) {
-        const user = await this.userRepository.findOneOrFail({ where: { id: userId as any }, relations: ["posts"] });
-        if (!user) {
-            throw new Error("User not found");
-        }
-        return user;
-    }
+    async createUser(userData: Partial<UserAdmin>): Promise<UserAdmin> {
+        const user = this.userRepository.create(userData);
+        return await this.userRepository.save(user);
+    }//createUser
 
-    async getAllUsers() {
-        const users = await this.userRepository.find({ relations: ["posts"] });
-        if (!users) {
-            throw new Error("User not found");
-        }
-        return users;
-    }
-    
-    // async deleteUser(userId: string) {
-    //     const user = await this.userRepository.findOne(userId);
-    //     if (!user) {
-    //         throw new Error("User not found");
-    //     }
-    //     await this.userRepository.remove(user);
-    // }
-}
+    async getAllUsers(): Promise<UserAdmin[]> {
+        return await this.userRepository.find();
+    }//getAllUsers
+
+    async getUserById(id: string): Promise<UserAdmin | null> {
+        return await this.userRepository.findOneBy({ id: new ObjectId(id) });
+    }//getUserById
+
+    async updateUser(id: string, userData: Partial<UserAdmin>): Promise<UserAdmin | null> {
+        await this.userRepository.update(id, userData);
+        return this.getUserById(id);
+    }//updateUser
+
+    async deleteUser(id: string): Promise<void> {
+        await this.userRepository.delete(id);
+    }//deleteUser
+}//class
+
