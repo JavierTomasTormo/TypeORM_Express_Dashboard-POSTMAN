@@ -45,7 +45,7 @@ Aquí tienes una visión general de la estructura del proyecto:
 1. **Clona el repositorio:**
 
     ```sh
-    git clone https://github.com/tu-usuario/tu-repositorio.git
+    git clone https://github.com/JavierTomasTormo/TypeORM_Express_Dashboard-POSTMAN
     cd tu-repositorio
     ```
 
@@ -161,5 +161,5 @@ Aquí tienes una visión general de la estructura del proyecto:
 ¡Las contribuciones son bienvenidas! Siéntete libre de abrir issues o pull requests. ¡Vamos a hacer este proyecto aún más increíble juntos! 🚀
 
 ---
-
+#### En el caso de dockerizar esto enviamelo, asi no tengo que hacerlo yo ;-)
 ¡Gracias por usar este proyecto! Si tienes alguna pregunta, no dudes en abrir un issue. ¡Feliz dia! 😄
