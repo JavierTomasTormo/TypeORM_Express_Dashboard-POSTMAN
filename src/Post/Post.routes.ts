@@ -1,19 +1,14 @@
-import { Router, Request, Response, NextFunction } from "express";
-import { PostController } from "./Post.controller";
+// src/Post/Post.routes.ts
+import { Router } from 'express';
+import { createPost, getAllPosts, getPostById, updatePost, deletePost } from './Post.controller';
 
 const router = Router();
-const postController = new PostController();
 
-router.post("/", async (req: Request, res: Response, next: NextFunction) => {
-    postController.createPost(req, res).catch(next);
-});
-
-router.get("/:postId", async (req: Request, res: Response, next: NextFunction) => {
-    postController.getPostById(req, res).catch(next);
-});
-
-router.delete("/:postId", async (req: Request, res: Response, next: NextFunction) => {
-    postController.deletePost(req, res).catch(next);
-});
+router.post('/', createPost);
+router.get('/', getAllPosts);
+router.get('/:postId', getPostById);
+router.put('/:postId', updatePost);
+router.delete('/:postId', deletePost);
 
 export default router;
+

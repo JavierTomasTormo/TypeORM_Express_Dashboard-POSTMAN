@@ -1,14 +1,14 @@
-import { Entity, ObjectIdColumn, ObjectId, Column, ManyToMany } from "typeorm";
-import { Post } from "../Post/post.entity";
+// src/userAdmin/userAdmin.entity.ts
+import { Entity, ObjectIdColumn, ObjectId, Column } from 'typeorm';
 
-@Entity()
-export class User {
+@Entity('userAdmin')
+export class UserAdmin {
     @ObjectIdColumn()
     id!: ObjectId;
 
     @Column()
-    name!: string;
+    username!: string;
 
-    @ManyToMany(() => Post, post => post.users)
-    posts!: Post[];
-}
+    @Column()
+    password!: string;
+}//@entity

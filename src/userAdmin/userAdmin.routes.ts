@@ -1,24 +1,27 @@
-import { Router, Request, Response, NextFunction } from "express";
-import { UserController } from "./userAdmin.controller";
+// src/userAdmin/userAdmin.routes.ts
+import { Router } from 'express';
+import {createUserAdmin, getAllUserAdmins, getUserAdminById, updateUserAdmin, deleteUserAdmin} from './userAdmin.controller';
 
 const router = Router();
-const userController = new UserController();
 
-router.post("/userAdmin", async (req: Request, res: Response, next: NextFunction) => {
-    userController.createUser(req, res).catch(next);
+// Ruta para crear un nuevo usuario
+router.post('/', createUserAdmin);
+
+// Ruta para obtener todos los usuarios
+router.get('/', getAllUserAdmins);
+
+// Ruta para obtener un usuario por ID
+router.get('/:id', (req, res, next) => {
+    getUserAdminById(req, res).catch(next);
 });
 
-router.get("/userAdmin/:userId", async (req: Request, res: Response, next: NextFunction) => {
-    userController.getUserById(req, res).catch(next);
+// Ruta para actualizar un usuario por ID
+router.put('/:id', (req, res, next) => {
+    updateUserAdmin(req, res).catch(next);
 });
 
-router.get("/userAdmin/", async (req: Request, res: Response, next: NextFunction) => {
-    userController.getAllUsers(req, res).catch(next);
-});
-
-// router.delete("/:userId", async (req: Request, res: Response, next: NextFunction) => {
-//     userController.deleteUser(req, res).catch(next);
-// });
-
+// Ruta para eliminar un usuario por ID
+router.delete('/:id', deleteUserAdmin);
 
 export default router;
+
