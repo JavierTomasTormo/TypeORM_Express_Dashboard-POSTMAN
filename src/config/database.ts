@@ -1,41 +1,28 @@
-import { createConnection } from "typeorm";
-import { User } from "../userAdmin/userAdmin.entity"; 
-import { Post } from "../Post/post.entity";
-import dotenv from "dotenv";
+// src/config/database.ts
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
-export const connectDB = async () => {
-    await createConnection({
-        type: "mongodb",
-        url: process.env.DATABASE_URL,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        entities: [
-            User,
-            Post 
-        ],
-        synchronize: true,
-        logging: false
-    });
-};
-// export const connectDB = async () => {
-//     await createConnection({
-//         type: process.env.DB_TYPE as any,
-//         url: process.env.DATABASE_URL,
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true,
-//         entities: [
-//             User,
-//             Post 
-//         ],
-//         synchronize: true,
-//         logging: false
-//     });};
-// import { createConnection, getConnectionOptions } from "typeorm";
+export const AppDataSource = new DataSource({
+    type: 'mongodb',
+    url: 'mongodb://localhost:27017/usersTypeORM',
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    entities: [
+        __dirname + '/../Post/Post.entity{.ts,.js}',
+        __dirname + '/../userAdmin/userAdmin.entity{.ts,.js}'
+    ],
+    synchronize: true, // solo para desarrollo, no usar en producción
+});//AppDataSource
 
-// export const connectDB = async () => {
-//     const connectionOptions = await getConnectionOptions();
-//     const connection = await createConnection(connectionOptions);
-//     return connection;
-// };
+export const connectDatabase = async () => {
+    try {
+        await AppDataSource.initialize();
+        console.log('Database connected');
+    } catch (error) {
+        console.error('Database connection error:', error);
+        process.exit(1);
+    }
+};//connectDatabase
