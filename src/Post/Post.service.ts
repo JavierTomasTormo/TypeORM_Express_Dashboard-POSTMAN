@@ -1,29 +1,30 @@
-import { getRepository } from "typeorm";
-import { Post } from "./post.entity";
-import { CreatePostDto } from "./dto/createPost.dto";
+// src/Post/Post.service.ts
+import { AppDataSource } from '../config/database';
+import { Post } from './post.entity';
+import { ObjectId } from 'mongodb';
 
 export class PostService {
-    private postRepository = getRepository(Post);
+    private postRepository = AppDataSource.getRepository(Post);
 
-    async createPost(createPostDto: CreatePostDto) {
-        const post = this.postRepository.create(createPostDto);
-        await this.postRepository.save(post);
-        return post;
-    }
+    async createPost(postData: Partial<Post>): Promise<Post> {
+        const post = this.postRepository.create(postData);
+        return await this.postRepository.save(post);
+    }//createPost
 
-    async getPostById(postId: string) {
-        const post = await this.postRepository.findOne(postId, { relations: ["users", "comments"] });
-        if (!post) {
-            throw new Error("Post not found");
-        }
-        return post;
-    }
+    async getAllPosts(): Promise<Post[]> {
+        return await this.postRepository.find();
+    }//getAllPosts
 
-    async deletePost(postId: string) {
-        const post = await this.postRepository.findOne(postId);
-        if (!post) {
-            throw new Error("Post not found");
-        }
-        await this.postRepository.remove(post);
-    }
-}
+    async getPostById(id: string): Promise<Post | null> {
+        return await this.postRepository.findOneBy({ id: new ObjectId(id) });
+    }//getPostById
+
+    async updatePost(id: string, postData: Partial<Post>): Promise<Post | null> {
+        await this.postRepository.update(id, postData);
+        return this.getPostById(id);
+    }//updatePost
+
+    async deletePost(id: string): Promise<void> {
+        await this.postRepository.delete(id);
+    }//deletePost
+}//class
