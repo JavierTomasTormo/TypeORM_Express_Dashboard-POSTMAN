@@ -1,13 +1,13 @@
 // src/config/database.ts
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 
-// dotenv.config();
+dotenv.config();
 
 export const AppDataSource = new DataSource({
-    type: 'mongodb',
-    url: 'mongodb://localhost:27017/usersTypeORM',
+    type: process.env.DB_TYPE as any,
+    url: process.env.DATABASE_URL,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     entities: [

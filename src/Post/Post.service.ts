@@ -16,7 +16,9 @@ export class PostService {
     }//getAllPosts
 
     async getPostById(id: string): Promise<Post | null> {
-        return await this.postRepository.findOneBy({ id: new ObjectId(id) });
+        const objectId = new ObjectId(id);
+        const result = await this.postRepository.findOne({ where: { _id: objectId } });
+        return result;
     }//getPostById
 
     async updatePost(id: string, postData: Partial<Post>): Promise<Post | null> {

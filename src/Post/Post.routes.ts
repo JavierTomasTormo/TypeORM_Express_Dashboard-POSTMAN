@@ -6,9 +6,13 @@ const router = Router();
 
 router.post('/', createPost);
 router.get('/', getAllPosts);
-router.get('/:postId', getPostById);
-router.put('/:postId', updatePost);
-router.delete('/:postId', deletePost);
+router.get('/:id', (req, res, next) => {
+    getPostById(req, res).catch(next);
+});
+router.put('/:id', (req, res, next) => {
+    updatePost(req, res).catch(next);
+});
+router.delete('/:id', deletePost);
 
 export default router;
 

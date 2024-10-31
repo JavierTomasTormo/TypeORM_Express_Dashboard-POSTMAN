@@ -29,6 +29,8 @@ const userAdminService = new UserAdminService();
         try {
             const { id } = req.params;
             const user = await userAdminService.getUserById(id);
+            // console.log(id);
+            // console.log(user);
             if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
             }

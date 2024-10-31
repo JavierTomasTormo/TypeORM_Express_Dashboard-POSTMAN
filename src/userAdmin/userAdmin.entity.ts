@@ -4,7 +4,7 @@ import { Entity, ObjectIdColumn, ObjectId, Column } from 'typeorm';
 @Entity('userAdmin')
 export class UserAdmin {
     @ObjectIdColumn()
-    id!: ObjectId;
+    _id?: ObjectId;
 
     @Column()
     username!: string;

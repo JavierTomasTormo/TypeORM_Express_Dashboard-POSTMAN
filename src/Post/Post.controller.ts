@@ -14,13 +14,17 @@ const postService = new PostService();
         res.json(posts);
     };//getAllPosts
 
+    
     export const getPostById = async (req: Request, res: Response) => {
-        const { postId } = req.params;
         try {
+            const { postId } = req.params;
             const post = await postService.getPostById(postId);
-            res.status(200).json(post);
+            if (!post) {
+                return res.status(404).json({ message: 'Post no encontrado' });
+            }
+            res.json(post);
         } catch (error) {
-            res.status(400).json({ message: error });
+            res.status(500).json({ message: 'Error al obtener el post', error });
         }
     };//getPostById
 
