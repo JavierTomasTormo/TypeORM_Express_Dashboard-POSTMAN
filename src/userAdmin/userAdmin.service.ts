@@ -2,16 +2,19 @@
 import { AppDataSource } from '../config/database';
 import { UserAdmin } from './userAdmin.entity';
 import { ObjectId } from 'mongodb';
-
+import { CreateUserAdminDto } from './dto/createUserAdmin.dto';
 
 export class UserAdminService {
     private userRepository = AppDataSource.getRepository(UserAdmin);
 
-    async createUser(userData: Partial<UserAdmin>): Promise<UserAdmin> {
+
+    async createUser(userData: CreateUserAdminDto): Promise<UserAdmin> {
         const user = this.userRepository.create(userData);
         return await this.userRepository.save(user);
-    }//createUser
+    }
 
+
+    
     async getAllUsers(): Promise<UserAdmin[]> {
         return await this.userRepository.find();
     }//getAllUsers

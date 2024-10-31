@@ -5,10 +5,14 @@ import {createUserAdmin, getAllUserAdmins, getUserAdminById, updateUserAdmin, de
 const router = Router();
 
 // Ruta para crear un nuevo usuario
-router.post('/', createUserAdmin);
+router.post('/', (req, res, next) => {
+    createUserAdmin(req, res).catch(next);
+});
 
 // Ruta para obtener todos los usuarios
-router.get('/', getAllUserAdmins);
+router.get('/', (req, res, next) => {
+    getAllUserAdmins(req, res).catch(next);
+});
 
 // Ruta para obtener un usuario por ID
 router.get('/:id', (req, res, next) => {
@@ -21,7 +25,9 @@ router.put('/:id', (req, res, next) => {
 });
 
 // Ruta para eliminar un usuario por ID
-router.delete('/:id', deleteUserAdmin);
+router.delete('/:id', (req, res, next) => {
+    deleteUserAdmin(req, res).catch(next);
+});
 
 export default router;
 

@@ -1,17 +1,23 @@
 // src/userAdmin/userAdmin.controller.ts
 import { Request, Response } from 'express';
 import { UserAdminService } from './userAdmin.service';
+import { CreateUserAdminDto, LoginUserDto, UpdateUserDto } from './dto';
+import { validate } from 'class-validator';
 
 const userAdminService = new UserAdminService();
 
     // Crear un nuevo usuario
     export const createUserAdmin = async (req: Request, res: Response) => {
-        try {
-            const newUser = await userAdminService.createUser(req.body);
-            res.status(201).json(newUser);
-        } catch (error) {
-            res.status(500).json({ message: 'Error al crear el usuario', error });
+        const createUserAdminDto = new CreateUserAdminDto();
+        Object.assign(createUserAdminDto, req.body);
+    
+        const errors = await validate(createUserAdminDto);
+        if (errors.length > 0) {
+            return res.status(400).json(errors);
         }
+    
+        const newUser = await userAdminService.createUser(createUserAdminDto);
+        res.json(newUser);
     };
 
     // Obtener todos los usuarios
